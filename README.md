@@ -5,11 +5,14 @@ leverage Azure doument intelligence, especially if the image files already live 
 or (even better) have the OCR text pre-extracted in a table. If this is not the case not we will need a stored procedure in Azure data factory or written manually to extract text from the label images. These can be set up to ingest all new submissions so they are pre-evaluated before being reviewed. 
 
   In this case the target outcome should be manual review avoidance. Most applications are made with the intent of being easily approved and well within the rules so we expect a large share of applications, possibly 50% to be relatively easy to identify as compliant.
-  
-The importance of this is cost and time savings. 
+   The importance of this is cost and time savings.  
 
   There are other reasonable methods, for example: 
-   Use R or Python for OCR and statistical grouping by likelihood of approval
+   Use R or Python for OCR and statistical grouping by likelihood of approval to identify the ones to review vs. pass via automation. (totally different technology may not leverage existing objects and working processed)
+   Use an API to a machine learning tool outside ADF to learn to differentiate approvable labels from ones needing review (requirements strongly favored not calling outside API)
+   Use an alternate AI solution in Azure data factory that may identify more approvable labels with less code. 
+   
+   I chose OCR because it is likely to identify a large number of applications where human intervention is unnecessary and has the potential to repurpose existing tables, views, and stored procedures if we happen to locate one containing label text. I think of this as a minimum viable project, potentially only needing a table, view, stored procedure, and script or connection to a reporting tool like PowerBI.
 
  
 Plan Summary: Use Azure document intelligence to extract text from all labels in the COLA system as they are ingested to Azure. Include two years of recent histoy to validate sensitivity of output. 
